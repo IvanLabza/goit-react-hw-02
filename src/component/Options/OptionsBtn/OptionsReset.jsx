@@ -1,6 +1,6 @@
 import React from "react";
 
-const OptionsBtn = (props) => {
+const OptionsReset = ({ setHideFee }) => {
   const styleBtn = {
     display: "block",
     padding: 10,
@@ -10,11 +10,12 @@ const OptionsBtn = (props) => {
     border: "transparent",
     minWidth: 70,
   };
+
   return (
-    <button style={styleBtn} onClick={props.onClick} type="button">
-      {props.name}
+    <button style={styleBtn} onClick={() => setHideFee(false)} type="button">
+      reset
     </button>
   );
 };
 
-export default OptionsBtn;
+export default OptionsReset;

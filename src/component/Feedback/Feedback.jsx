@@ -1,15 +1,21 @@
 import React from "react";
 import FeedbackItem from "./FeedbackItem/FeedbackItem";
 import css from "./Feedback.module.css";
+import FeedbackTotal from "./FeedbackItem/FeedbackTotal";
 
-const Feedback = ({ item }) => {
+const Feedback = ({ item, positivePercentage, showTotal }) => {
   return (
     <ul className={css.list}>
       {item.map((element, index) => {
-        const name = Object.keys(element)[0];
-        const value = element[name];
-        return <FeedbackItem key={index} name={name} value={value} />;
+        return (
+          <FeedbackItem key={index} name={element.type} value={element.count} />
+        );
       })}
+      {showTotal && (
+        <div>
+          <FeedbackTotal positivePercentage={positivePercentage} />
+        </div>
+      )}
     </ul>
   );
 };

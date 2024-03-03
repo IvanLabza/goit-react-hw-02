@@ -1,6 +1,1 @@
-[
-  { "name": "good", "value": 0 },
-  { "name": "neutral", "value": 0 },
-  { "name": "bad", "value": 0 },
-  { "name": "reset", "value": 0 }
-]
+[{ "name": "good" }, { "name": "neutral" }, { "name": "bad" }]
