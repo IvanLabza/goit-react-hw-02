@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import Description from "./component/Description/Description";
-import Feedback from "./component/Feedback/Feedback";
-import Options from "./component/Options/Options";
+import Description from "./components/Description/Description";
+import Feedback from "./components/Feedback/Feedback";
+import Options from "./components/Options/Options";
 import valueFeeJson from "./json/valueFee.json";
 import valueBtn from "./json/valueBtn.json";
-import NoFeedbeck from "./component/NoFeedbeck/NoFeedbeck";
+import NoFeedbeck from "./components/NoFeedbeck/NoFeedbeck";
 
 function App() {
   const [selectedValueFee, setSelectedValueFee] = useState(
