@@ -1,6 +1,6 @@
 import React from "react";
 
-const OptionsReset = ({ resetLocal }) => {
+const OptionsReset = ({ resetTotal }) => {
   const styleBtn = {
     display: "block",
     padding: 10,
@@ -12,7 +12,7 @@ const OptionsReset = ({ resetLocal }) => {
   };
 
   return (
-    <button style={styleBtn} onClick={resetLocal} type="button">
+    <button style={styleBtn} onClick={resetTotal} type="button">
       reset
     </button>
   );

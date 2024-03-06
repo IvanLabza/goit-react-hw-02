@@ -15,7 +15,6 @@ const OptionsBtn = ({ name, updateFeedback, handleClicks }) => {
       style={styleBtn}
       onClick={() => {
         updateFeedback(name);
-        handleClicks();
       }}
       type="button"
     >

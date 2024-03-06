@@ -9,7 +9,7 @@ const FeedbackTotal = ({ total }) => {
   return (
     <li style={item}>
       <span>Total:</span>
-      <span>{total}%;</span>
+      <span>{total};</span>
     </li>
   );
 };
