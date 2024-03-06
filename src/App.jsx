@@ -4,47 +4,48 @@ import Feedback from "./components/Feedback/Feedback";
 import Options from "./components/Options/Options";
 import valueFeeJson from "./json/valueFee.json";
 import valueBtn from "./json/valueBtn.json";
-import NoFeedbeck from "./components/NoFeedbeck/NoFeedbeck";
+import Notification from "./components/Notification/Notification";
 
 function App() {
   const [selectedValueFee, setSelectedValueFee] = useState(
     JSON.parse(localStorage.getItem("selectedValueFee")) || valueFeeJson
   );
-  const [showTotal, setShowTotal] = useState(false);
-  const [hideFee, setHideFee] = useState(true);
-
-  const [positivePercentage, setPositivePercentage] = useState(0);
-
-  const localClick = localStorage.setItem(
-    "selectedValueFee",
-    JSON.stringify(selectedValueFee)
+  const [total, setTotal] = useState(0);
+  const [hide, setHide] = useState(true);
+  const [clicks, setClick] = useState(
+    JSON.parse(localStorage.getItem("clicks")) || 0
   );
 
+  const handleClicks = () => {
+    setClick((clicks) => {
+      clicks = +1;
+      localStorage.setItem("clicks", JSON.stringify(clicks));
+    });
+  };
+
   useEffect(() => {
-    setSelectedValueFee((prevState) =>
-      prevState.map((item) => ({ ...item, count: 0 }))
-    );
-  }, [hideFee]);
-
-
-  useEffect(() => {
-    const totalFeedback = selectedValueFee.reduce(
-      (total, item) => total + item.count,
-      0
-    );
-    const goodCount = selectedValueFee.find(
-      (item) => item.type === "good"
-    ).count;
-    const neutralCount = selectedValueFee.find(
-      (item) => item.type === "neutral"
-    ).count;
-
-    const percentage = Math.round(
-      ((goodCount + neutralCount) / totalFeedback) * 100
-    );
-
-    setPositivePercentage(percentage);
+    localStorage.setItem("selectedValueFee", JSON.stringify(selectedValueFee));
+    totalFee(selectedValueFee);
   }, [selectedValueFee]);
+
+  const resetLocal = () => {
+    localStorage.removeItem("selectedValueFee");
+    setSelectedValueFee((prevState) => {
+      return prevState.map((item) => {
+        return { ...item, count: (item.count = 0) };
+      });
+    });
+    localStorage.removeItem("clicks");
+    setClick(0);
+  };
+
+  useEffect(() => {
+    if (clicks === 0) {
+      setHide(false);
+    } else {
+      setHide(true);
+    }
+  }, [handleClicks]);
 
   const updateFeedback = (feedbackType) => {
     setSelectedValueFee((prevState) => {
@@ -55,7 +56,17 @@ function App() {
         return item;
       });
     });
-    setShowTotal(true);
+  };
+
+  const totalFee = (selectedValueFee) => {
+    setTotal((prevState) => {
+      const good = selectedValueFee[0].count;
+      const neutral = selectedValueFee[1].count;
+      const bad = selectedValueFee[2].count;
+      const sum = good + neutral + bad;
+      prevState = Math.round(((good + neutral) / sum) * 100);
+      return prevState;
+    });
   };
 
   return (
@@ -63,19 +74,16 @@ function App() {
       <div className="container">
         <Description />
         <Options
-          handleOptionClick={updateFeedback}
-          showTotal={showTotal}
           nameBtn={valueBtn}
-          setHideFee={setHideFee}
+          hide={hide}
+          updateFeedback={updateFeedback}
+          resetLocal={resetLocal}
+          handleClicks={handleClicks}
         />
-        {hideFee ? (
-          <Feedback
-            item={selectedValueFee}
-            positivePercentage={positivePercentage}
-            showTotal={showTotal}
-          />
+        {hide ? (
+          <Feedback item={selectedValueFee} hide={hide} total={total} />
         ) : (
-          <NoFeedbeck />
+          <Notification />
         )}
       </div>
     </div>

@@ -3,7 +3,13 @@ import css from "./Options.module.css";
 import OptionsBtn from "./OptionsBtn/OptionsBtn";
 import OptionsReset from "./OptionsBtn/OptionsReset";
 
-const Options = ({ nameBtn, handleOptionClick, showTotal, setHideFee }) => {
+const Options = ({
+  nameBtn,
+  updateFeedback,
+  hide,
+  resetLocal,
+  handleClicks,
+}) => {
   return (
     <div>
       <ul className={css.navList}>
@@ -11,14 +17,12 @@ const Options = ({ nameBtn, handleOptionClick, showTotal, setHideFee }) => {
           <li key={index}>
             <OptionsBtn
               name={item.name}
-              onClick={() => {
-                handleOptionClick(item.name);
-                setHideFee(true);
-              }}
+              updateFeedback={() => updateFeedback(item.name)}
+              handleClicks={handleClicks}
             />
           </li>
         ))}
-        {showTotal && <OptionsReset setHideFee={setHideFee} />}
+        {hide ? <OptionsReset resetLocal={resetLocal} /> : null}
       </ul>
     </div>
   );

@@ -1,6 +1,6 @@
 import React from "react";
 
-const FeedbackTotal = ({ positivePercentage }) => {
+const FeedbackTotal = ({ total }) => {
   const item = {
     display: "flex",
     color: "#fff",
@@ -9,7 +9,7 @@ const FeedbackTotal = ({ positivePercentage }) => {
   return (
     <li style={item}>
       <span>Total:</span>
-      <span>{positivePercentage}%;</span>
+      <span>{total}%;</span>
     </li>
   );
 };

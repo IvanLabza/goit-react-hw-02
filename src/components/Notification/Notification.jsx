@@ -1,6 +1,6 @@
 import React from "react";
 
-const NoFeedbeck = () => {
+const Notification = () => {
   const style = {
     color: "#fff",
     textAlign: "center",
@@ -10,4 +10,4 @@ const NoFeedbeck = () => {
   return <div style={style}>No Feedbeck Yet!</div>;
 };
 
-export default NoFeedbeck;
+export default Notification;

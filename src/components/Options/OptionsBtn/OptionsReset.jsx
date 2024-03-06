@@ -1,6 +1,6 @@
 import React from "react";
 
-const OptionsReset = ({ setHideFee }) => {
+const OptionsReset = ({ resetLocal }) => {
   const styleBtn = {
     display: "block",
     padding: 10,
@@ -12,7 +12,7 @@ const OptionsReset = ({ setHideFee }) => {
   };
 
   return (
-    <button style={styleBtn} onClick={() => setHideFee(false)} type="button">
+    <button style={styleBtn} onClick={resetLocal} type="button">
       reset
     </button>
   );

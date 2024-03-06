@@ -1,6 +1,6 @@
 import React from "react";
 
-const OptionsBtn = (props) => {
+const OptionsBtn = ({ name, updateFeedback, handleClicks }) => {
   const styleBtn = {
     display: "block",
     padding: 10,
@@ -11,8 +11,15 @@ const OptionsBtn = (props) => {
     minWidth: 70,
   };
   return (
-    <button style={styleBtn} onClick={props.onClick} type="button">
-      {props.name}
+    <button
+      style={styleBtn}
+      onClick={() => {
+        updateFeedback(name);
+        handleClicks();
+      }}
+      type="button"
+    >
+      {name}
     </button>
   );
 };
