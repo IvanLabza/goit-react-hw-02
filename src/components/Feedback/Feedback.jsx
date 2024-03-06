@@ -11,7 +11,7 @@ const Feedback = ({ item, total, hide }) => {
           <FeedbackItem key={index} name={element.type} value={element.count} />
         );
       })}
-      <div>{hide ? null : <FeedbackTotal total={total} />}</div>
+      <div>{hide ? <FeedbackTotal total={total} /> : null}</div>
     </ul>
   );
 };
