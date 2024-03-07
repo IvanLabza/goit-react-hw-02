@@ -23,14 +23,13 @@ function App() {
 
   useEffect(() => {
     setTotal(() => {
-      localStorage.setItem("totalClick", JSON.stringify(total));
       const keys = Object.keys(selectedValueFee);
       const totalSum = keys.reduce(
         (acc, key) => acc + selectedValueFee[key],
         0
       );
-      console.log("Общая сумма:", totalSum);
       setTotal(totalSum);
+      localStorage.setItem("totalClick", JSON.stringify(totalSum));
     });
   }, [selectedValueFee]);
 
