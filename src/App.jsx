@@ -22,35 +22,32 @@ function App() {
   }, [selectedValueFee]);
 
   useEffect(() => {
-    const sum = selectedValueFee.reduce((acc, item) => {
-      const key = Object.keys(item)[0];
-      const totalClick = acc + item[key];
-      localStorage.setItem("totalClick", JSON.stringify(totalClick));
-      return totalClick;
-    }, 0);
-    setTotal(sum);
+    setTotal(() => {
+      localStorage.setItem("totalClick", JSON.stringify(total));
+      const keys = Object.keys(selectedValueFee);
+      const totalSum = keys.reduce(
+        (acc, key) => acc + selectedValueFee[key],
+        0
+      );
+      console.log("Общая сумма:", totalSum);
+      setTotal(totalSum);
+    });
   }, [selectedValueFee]);
 
   const updateFeedback = (feedbackType) => {
     setSelectedValueFee((prevState) => {
-      return prevState.map((item) => {
-        const key = Object.keys(item)[0];
-        if (key === feedbackType) {
-          return {
-            ...item,
-            [key]: item[key] + 1,
-          };
-        }
-        return item;
-      });
+      return {
+        ...prevState,
+        [feedbackType]: prevState[feedbackType] + 1,
+      };
     });
   };
 
   const calcTotal = (selectedValueFee) => {
     setPositive((prevState) => {
-      const good = selectedValueFee[0].good;
-      const neutral = selectedValueFee[1].neutral;
-      const bad = selectedValueFee[2].bad;
+      const good = selectedValueFee.good;
+      const neutral = selectedValueFee.neutral;
+      const bad = selectedValueFee.bad;
       const sum = good + neutral + bad;
       prevState = Math.round(((good + neutral) / sum) * 100);
       return prevState;
@@ -72,6 +69,7 @@ function App() {
           updateFeedback={updateFeedback}
           resetTotal={resetTotal}
         />
+
         {total > 0 ? (
           <Feedback item={selectedValueFee} total={total} positive={positive} />
         ) : (

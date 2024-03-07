@@ -4,19 +4,18 @@ import css from "./Feedback.module.css";
 import FeedbackTotal from "./FeedbackItem/FeedbackTotal";
 
 const Feedback = ({ item, total, positive }) => {
-   const itemStyle = {
-     display: "flex",
-     color: "#fff",
-     gap: 8,
-   };
+  const itemStyle = {
+    display: "flex",
+    color: "#fff",
+    gap: 8,
+  };
+
   return (
     <ul className={css.list}>
-      {item.map((element, index) => {
-        const key = Object.keys(element)[0];
-        const value = element[key];
-        return <FeedbackItem key={index} name={key} value={value} />;
-      })}
-      {total > 0 ? (
+      {Object.entries(item).map(([key, value], index) => (
+        <FeedbackItem key={index} name={key} value={value} />
+      ))}
+      {total > 0 && (
         <>
           <FeedbackTotal total={total} />
           <li style={itemStyle}>
@@ -24,7 +23,7 @@ const Feedback = ({ item, total, positive }) => {
             <span>{positive}%;</span>
           </li>
         </>
-      ) : null}
+      )}
     </ul>
   );
 };
