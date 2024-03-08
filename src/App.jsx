@@ -18,10 +18,7 @@ function App() {
   useEffect(() => {
     localStorage.setItem("selectedValueFee", JSON.stringify(selectedValueFee));
     setTotal(selectedValueFee);
-    calcTotal(selectedValueFee);
-  }, [selectedValueFee]);
-
-  useEffect(() => {
+    calcPositiveFeedback(selectedValueFee);
     setTotal(() => {
       const keys = Object.keys(selectedValueFee);
       const totalSum = keys.reduce(
@@ -42,20 +39,22 @@ function App() {
     });
   };
 
-  const calcTotal = (selectedValueFee) => {
+  const calcPositiveFeedback = () => {
     setPositive((prevState) => {
-      const good = selectedValueFee.good;
-      const neutral = selectedValueFee.neutral;
-      const bad = selectedValueFee.bad;
-      const sum = good + neutral + bad;
-      prevState = Math.round(((good + neutral) / sum) * 100);
+      prevState = Math.round(
+        ((selectedValueFee.good + selectedValueFee.neutral) /
+          (selectedValueFee.good +
+            selectedValueFee.neutral +
+            selectedValueFee.bad)) *
+          100
+      );
       return prevState;
     });
   };
 
   const resetTotal = () => {
     setTotal(0);
-    setSelectedValueFee(valueFeeJson);
+    setSelectedValueFee({ good: 0, neutral: 0, bad: 0 });
   };
 
   return (
