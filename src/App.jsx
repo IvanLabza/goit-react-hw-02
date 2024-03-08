@@ -17,17 +17,19 @@ function App() {
 
   useEffect(() => {
     localStorage.setItem("selectedValueFee", JSON.stringify(selectedValueFee));
-    setTotal(selectedValueFee);
-    calcPositiveFeedback(selectedValueFee);
-    setTotal(() => {
-      const keys = Object.keys(selectedValueFee);
-      const totalSum = keys.reduce(
-        (acc, key) => acc + selectedValueFee[key],
-        0
-      );
-      setTotal(totalSum);
-      localStorage.setItem("totalClick", JSON.stringify(totalSum));
-    });
+    localStorage.setItem("totalClick", JSON.stringify(total));
+  }, [selectedValueFee, total]);
+
+  useEffect(() => {
+    const totalSum = Object.values(selectedValueFee).reduce(
+      (acc, val) => acc + val,
+      0
+    );
+    setTotal(totalSum);
+    const positiveFeedback = Math.round(
+      ((selectedValueFee.good + selectedValueFee.neutral) / totalSum) * 100
+    );
+    setPositive(positiveFeedback);
   }, [selectedValueFee]);
 
   const updateFeedback = (feedbackType) => {
@@ -39,22 +41,10 @@ function App() {
     });
   };
 
-  const calcPositiveFeedback = () => {
-    setPositive((prevState) => {
-      prevState = Math.round(
-        ((selectedValueFee.good + selectedValueFee.neutral) /
-          (selectedValueFee.good +
-            selectedValueFee.neutral +
-            selectedValueFee.bad)) *
-          100
-      );
-      return prevState;
-    });
-  };
-
   const resetTotal = () => {
-    setTotal(0);
     setSelectedValueFee({ good: 0, neutral: 0, bad: 0 });
+    setTotal(0);
+    setPositive(0);
   };
 
   return (
