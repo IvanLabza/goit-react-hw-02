@@ -8,7 +8,11 @@ import Notification from "./components/Notification/Notification";
 
 function App() {
   const [selectedValueFee, setSelectedValueFee] = useState(
-    JSON.parse(localStorage.getItem("selectedValueFee")) || valueFeeJson
+    JSON.parse(localStorage.getItem("selectedValueFee")) || {
+      good: 0,
+      neutral: 0,
+      bad: 0,
+    }
   );
   const [total, setTotal] = useState(
     JSON.parse(localStorage.getItem("totalClick")) || 0
