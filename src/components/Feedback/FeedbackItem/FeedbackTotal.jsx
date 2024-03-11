@@ -1,6 +1,6 @@
 import React from "react";
 
-const FeedbackTotal = ({ total }) => {
+const FeedbackTotal = ({ totalSum }) => {
   const item = {
     display: "flex",
     color: "#fff",
@@ -9,7 +9,7 @@ const FeedbackTotal = ({ total }) => {
   return (
     <li style={item}>
       <span>Total:</span>
-      <span>{total};</span>
+      <span>{totalSum};</span>
     </li>
   );
 };

@@ -3,7 +3,7 @@ import css from "./Options.module.css";
 import OptionsBtn from "./OptionsBtn/OptionsBtn";
 import OptionsReset from "./OptionsBtn/OptionsReset";
 
-const Options = ({ nameBtn, updateFeedback, total, resetTotal }) => {
+const Options = ({ nameBtn, updateFeedback, totalSum, resetTotal }) => {
   return (
     <div>
       <ul className={css.navList}>
@@ -15,7 +15,7 @@ const Options = ({ nameBtn, updateFeedback, total, resetTotal }) => {
             />
           </li>
         ))}
-        {total > 0 ? <OptionsReset resetTotal={resetTotal} /> : null}
+        {totalSum > 0 ? <OptionsReset resetTotal={resetTotal} /> : null}
       </ul>
     </div>
   );

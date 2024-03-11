@@ -3,7 +3,7 @@ import FeedbackItem from "./FeedbackItem/FeedbackItem";
 import css from "./Feedback.module.css";
 import FeedbackTotal from "./FeedbackItem/FeedbackTotal";
 
-const Feedback = ({ item, total, positive }) => {
+const Feedback = ({ item, totalSum, positiveFeedback }) => {
   const itemStyle = {
     display: "flex",
     color: "#fff",
@@ -15,12 +15,12 @@ const Feedback = ({ item, total, positive }) => {
       {Object.entries(item).map(([key, value], index) => (
         <FeedbackItem key={index} name={key} value={value} />
       ))}
-      {total > 0 && (
+      {totalSum > 0 && (
         <>
-          <FeedbackTotal total={total} />
+          <FeedbackTotal totalSum={totalSum} />
           <li style={itemStyle}>
             <span>Positive:</span>
-            <span>{positive}%;</span>
+            <span>{positiveFeedback}%;</span>
           </li>
         </>
       )}

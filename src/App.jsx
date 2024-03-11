@@ -5,39 +5,30 @@ import Options from "./components/Options/Options";
 import valueFeeJson from "./json/valueFee.json";
 import valueBtn from "./json/valueBtn.json";
 import Notification from "./components/Notification/Notification";
-
 function App() {
-  const [selectedValueFee, setSelectedValueFee] = useState(
-    JSON.parse(localStorage.getItem("selectedValueFee")) || {
-      good: 0,
-      neutral: 0,
-      bad: 0,
-    }
+  const [feedbackState, setFeedbackState] = useState(
+    () =>
+      JSON.parse(localStorage.getItem("feedbackState")) || {
+        good: 0,
+        neutral: 0,
+        bad: 0,
+      }
   );
-  const [total, setTotal] = useState(
-    JSON.parse(localStorage.getItem("totalClick")) || 0
-  );
-  const [positive, setPositive] = useState(0);
 
   useEffect(() => {
-    localStorage.setItem("selectedValueFee", JSON.stringify(selectedValueFee));
-    localStorage.setItem("totalClick", JSON.stringify(total));
-  }, [selectedValueFee, total]);
+    localStorage.setItem("feedbackState", JSON.stringify(feedbackState));
+  }, [feedbackState]);
 
-  useEffect(() => {
-    const totalSum = Object.values(selectedValueFee).reduce(
-      (acc, val) => acc + val,
-      0
-    );
-    setTotal(totalSum);
-    const positiveFeedback = Math.round(
-      ((selectedValueFee.good + selectedValueFee.neutral) / totalSum) * 100
-    );
-    setPositive(positiveFeedback);
-  }, [selectedValueFee]);
+  const totalSum = Object.values(feedbackState).reduce(
+    (acc, val) => acc + val,
+    0
+  );
+  const positiveFeedback = Math.round(
+    ((feedbackState.good + feedbackState.neutral) / totalSum) * 100
+  );
 
   const updateFeedback = (feedbackType) => {
-    setSelectedValueFee((prevState) => {
+    setFeedbackState((prevState) => {
       return {
         ...prevState,
         [feedbackType]: prevState[feedbackType] + 1,
@@ -46,9 +37,7 @@ function App() {
   };
 
   const resetTotal = () => {
-    setSelectedValueFee({ good: 0, neutral: 0, bad: 0 });
-    setTotal(0);
-    setPositive(0);
+    setFeedbackState({ good: 0, neutral: 0, bad: 0 });
   };
 
   return (
@@ -56,14 +45,18 @@ function App() {
       <div className="container">
         <Description />
         <Options
-          total={total}
+          totalSum={totalSum}
           nameBtn={valueBtn}
           updateFeedback={updateFeedback}
           resetTotal={resetTotal}
         />
 
-        {total > 0 ? (
-          <Feedback item={selectedValueFee} total={total} positive={positive} />
+        {totalSum > 0 ? (
+          <Feedback
+            item={feedbackState}
+            totalSum={totalSum}
+            positiveFeedback={positiveFeedback}
+          />
         ) : (
           <Notification />
         )}
